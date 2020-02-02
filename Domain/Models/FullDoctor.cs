@@ -1,5 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Collections.Generic;
 
 namespace Hospital.API.Domain.Models
 {
@@ -21,5 +23,8 @@ namespace Hospital.API.Domain.Models
         public string work_day2 { get; set; }
         public string work_day3 { get; set; }
         public string work_day4 { get; set; }
+
+        // [NotMapped]
+        // public ICollection<Visit> visits { get; set; }
     }
 }

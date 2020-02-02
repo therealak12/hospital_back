@@ -55,9 +55,11 @@ namespace Hospital.API
 
             app.UseRouting();
 
-            app.UseAuthorization();
-            
             app.UseCors(MyAllowSpecificOrigins);
+            
+            app.UseAuthorization();
+
+            // app.UseMvc();
 
             app.UseEndpoints(endpoints =>
             {
