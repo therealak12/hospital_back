@@ -24,6 +24,14 @@ namespace Hospital.API.Controllers
             return Ok(patient);
         }
 
+        [HttpGet("{id}")]
+        public IActionResult GetPatient(int id) {
+            var patient = dbContext.Patient
+            .FromSqlRaw("select * from patient natural join person where national_id = {0}", id);
+
+            return Ok(patient);
+        }
+
         [HttpGet("{id}/visits")]
         public IActionResult GetPatientVisits(int id)
         {

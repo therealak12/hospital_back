@@ -29,10 +29,6 @@ namespace Hospital.API.Controllers
             var doctor = dbContext.Doctor
             .FromSqlRaw("select * from doctor natural join person where emp_id = {0}", id);
 
-            var medicines = dbContext.pres_medicine
-            .FromSqlRaw("select med_name, amount, each_n_hours, pres_id from visit natural join pres_medicine where doctor_id = {0}", id)
-            .ToList();
-
             return Ok(doctor);
         }
 
