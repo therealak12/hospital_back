@@ -7,12 +7,10 @@ namespace Hospital.API.Domain.Models
 {
     public class Visit
     {
-        public int patient_id { get; set; }
-        public DateTime vis_date { get; set; }
-
         public int doctor_id { get; set; }
-
+        public int patient_id { get; set; }
         public int dis_code { get; set; }
+        public DateTime vis_date { get; set; }
         public int pres_id { get; set; }
 
         [NotMapped]

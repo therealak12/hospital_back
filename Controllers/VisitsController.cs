@@ -19,28 +19,33 @@ namespace Hospital.API.Controllers
         [HttpPost]
         public IActionResult CreateVisit([FromBody] Visit visit)
         {
-            // Console.WriteLine(visit.medicines[0]);
-
+            var last = dbContext.prescribtion.FromSqlRaw("select * from prescribtion").Count();
             try
             {
                 dbContext.prescribtion
-                .FromSqlRaw("insert into prescribtion values({0})", visit.pres_id);
-                dbContext.Database.ExecuteSqlRaw("insert into prescribtion values({0})", visit.pres_id);
+                .FromSqlRaw("insert into prescribtion values({0})", last + 1);
+                dbContext.Database.ExecuteSqlRaw("insert into prescribtion values({0})", last);
+                Console.WriteLine();
             }
             catch (Exception e)
             {
+                Console.WriteLine("Error while inserting in prescribtion table");
                 Console.WriteLine(e.Message);
+                Console.WriteLine();
             }
 
             try
             {
                 dbContext.Database
                 .ExecuteSqlRaw("insert into visit values ({0}, {1}, {2}, {3}, {4})"
-                , visit.patient_id, visit.vis_date, visit.doctor_id, visit.dis_code, visit.pres_id);
+                , visit.patient_id, visit.vis_date, visit.doctor_id, visit.dis_code, last);
             }
             catch (Exception e)
             {
+
+                Console.WriteLine("Error while inserting in visit table");
                 Console.WriteLine(e.Message);
+                Console.WriteLine();
             }
 
             try
@@ -48,12 +53,14 @@ namespace Hospital.API.Controllers
                 foreach (PresMedicine pres_medicine in visit.medicines)
                 {
                     dbContext.Database
-                    .ExecuteSqlRaw("insert into pres_medicine values ({0}, {1}, {2}, {3})"
-                        , pres_medicine.pres_id, pres_medicine.med_name, pres_medicine.amount, pres_medicine.each_n_hours);
+                    .ExecuteSqlRaw("insert into pres_medicine values ({0}, {1}, {2}, {3})",
+                        last, pres_medicine.med_name, pres_medicine.amount, pres_medicine.each_n_hours);
                 }
             }
             catch (Exception e)
             {
+
+                Console.WriteLine("Error while inserting in pres_medicine table");
                 Console.WriteLine(e.Message);
             }
 
